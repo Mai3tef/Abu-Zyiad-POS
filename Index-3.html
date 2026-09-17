@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معرض أبو زياد للملابس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F1;
+    --bg-soft: #EFEBE3;
+    --card: #FFFFFF;
+    --border: #E8E2D6;
+    --ink: #2D2A26;
+    --ink-soft: #6B655C;
+    --tan: #8B7355;
+    --tan-dark: #6E5A42;
+    --sage: #5B7065;
+    --sage-soft: #E7EDE9;
+    --rust: #B85C4A;
+    --rust-soft: #F5E7E3;
+    --gold: #B8944A;
+    --gold-soft: #F3ECDC;
+    --shadow: 0 1px 2px rgba(45,42,38,0.04), 0 2px 8px rgba(45,42,38,0.04);
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, .brand {
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  /* ===== HEADER ===== */
+  .topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .brand-block { display: flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    background: var(--tan);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+  }
+  .brand-text .name {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .brand-text .sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .date-chip {
+    font-size: 13px;
+    color: var(--ink-soft);
+    background: var(--bg-soft);
+    padding: 8px 14px;
+    border-radius: 8px;
+  }
+  .user-chip {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--sage);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 4px;
+    padding: 0 24px;
+    overflow-x: auto;
+  }
+  .nav-item {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color .15s ease, border-color .15s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-item:hover { color: var(--ink); }
+  .nav-item.active {
+    color: var(--tan-dark);
+    border-bottom-color: var(--tan);
+  }
+
+  /* ===== LAYOUT ===== */
+  .page { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-title {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .btn {
+    font-family: 'Cairo', sans-serif;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform .1s ease, opacity .15s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--tan); color: white; }
+  .btn-primary:hover { background: var(--tan-dark); }
+  .btn-sage { background: var(--sage); color: white; }
+  .btn-sage:hover { opacity: .9; }
+  .btn-ghost { background: var(--bg-soft); color: var(--ink); }
+  .btn-ghost:hover { background: var(--border); }
+  .btn-rust { background: var(--rust); color: white; }
+  .btn-rust:hover { opacity: .9; }
+  .btn-sm { padding: 7px 12px; font-size: 13px; border-radius: 7px; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ===== STAT CARDS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .stats-grid { grid-template-columns: 1fr; } }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .stat-card .top-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .stat-label { font-size: 13px; color: var(--ink-soft); font-weight: 600; }
+  .stat-value { font-size: 24px; font-weight: 800; }
+
+  .icon-tan { background: var(--gold-soft); color: var(--gold); }
+  .icon-sage { background: var(--sage-soft); color: var(--sage); }
+  .icon-rust { background: var(--rust-soft); color: var(--rust); }
+  .icon-neutral { background: var(--bg-soft); color: var(--tan-dark); }
+
+  /* ===== QUICK ACTIONS ===== */
+  .quick-actions {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+  }
+  .quick-actions h3 { font-size: 15px; margin-bottom: 14px; color: var(--ink); }
+  .qa-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 900px) { .qa-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .qa-btn {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .qa-btn:hover { background: var(--card); border-color: var(--tan); }
+  .qa-btn .qa-icon { font-size: 22px; display: block; margin-bottom: 8px; }
+
+  /* ===== TABLE ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--bg-soft);
+    padding: 12px 16px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 14px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-soft); }
+
+  .empty-state {
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 10px; opacity: .5; }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .badge-sage { background: var(--sage-soft); color: var(--sage); }
+  .badge-rust { background: var(--rust-soft); color: var(--rust); }
+  .badge-gold { background: var(--gold-soft); color: var(--gold); }
+
+  /* ===== POS SCREEN ===== */
+  .pos-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  @media (max-width: 950px) {
+    .pos-layout { grid-template-columns: 1fr; }
+  }
+
+  .pos-summary {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 18px;
+  }
+  .total-box {
+    background: var(--sage);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .total-box .label { font-size: 13px; opacity: .85; margin-bottom: 4px; }
+  .total-box .amount { font-size: 30px; font-weight: 800; }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-row:last-of-type { border-bottom: none; }
+  .summary-row .lbl { color: var(--ink-soft); }
+  .summary-row .val { font-weight: 700; }
+
+  .field-group { margin: 14px 0; }
+  .field-label { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; font-weight: 600; }
+  .field-input, select.field-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .field-input:focus { outline: none; border-color: var(--tan); background: white; }
+
+  .pay-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+  .pay-method {
+    padding: 12px 6px;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--ink-soft);
+    background: var(--bg);
+  }
+  .pay-method.active { border-color: var(--sage); background: var(--sage-soft); color: var(--sage); }
+
+  .pos-main {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .search-bar input {
+    flex: 1;
+    min-width: 200px;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+  }
+  .search-bar input:focus { outline: none; border-color: var(--tan); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 18px 20px;
+  }
+  .product-tile {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color .15s ease, transform .1s ease;
+    background: var(--bg);
+  }
+  .product-tile:hover { border-color: var(--tan); transform: translateY(-1px); }
+  .product-tile .p-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .product-tile .p-price { color: var(--tan-dark); font-weight: 800; font-size: 15px; }
+  .product-tile .p-stock { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+  .product-tile.low-stock .p-stock { color: var(--rust); font-weight: 700; }
+
+  .cart-list { padding: 4px 20px 20px; }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item .ci-name { flex: 1; font-weight: 600; font-size: 14px; }
+  .cart-item .ci-price { font-size: 13px; color: var(--ink-soft); min-width: 70px; text-align: center; }
+  .qty-control { display: flex; align-items: center; gap: 6px; }
+  .qty-btn {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-btn:hover { background: var(--border); }
+  .ci-qty { width: 28px; text-align: center; font-weight: 700; }
+  .ci-total { min-width: 75px; text-align: left; font-weight: 800; }
+  .ci-remove { color: var(--rust); cursor: pointer; font-size: 16px; padding: 0 4px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(45,42,38,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white;
+    border-radius: 14px;
+    padding: 26px;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-box h3 { margin-bottom: 18px; font-size: 18px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions .btn { flex: 1; justify-content: center; }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity .2s ease, transform .2s ease;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .loading-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--tan);
+    animation: pulse 1s infinite ease-in-out;
+  }
+  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+
+  .hint { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand-block">
+    <div class="brand-mark">أ</div>
+    <div class="brand-text">
+      <div class="name">معرض أبو زياد</div>
+      <div class="sub">نظام إدارة المحل</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="date-chip" id="todayDate"></span>
+    <div class="user-chip">
+      <div class="avatar">أ</div>
+      <span>البائع</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-item active" data-page="dashboard">لوحة التحكم</div>
+  <div class="nav-item" data-page="pos">نقطة البيع</div>
+  <div class="nav-item" data-page="products">الأصناف</div>
+  <div class="nav-item" data-page="invoices">الفواتير</div>
+  <div class="nav-item" data-page="expenses">المصروفات</div>
+  <div class="nav-item" onclick="exportBackup()" style="margin-right:auto;">⬇ نسخة احتياطية</div>
+  <div class="nav-item" onclick="document.getElementById('importFile').click()">⬆ استيراد نسخة</div>
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this.files[0])">
+</div>
+
+<div class="page" id="pageContent">
+  <!-- rendered by JS -->
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== STORAGE HELPERS (IndexedDB) =====================
+// يعمل محليًا في متصفح الجهاز نفسه، ويفضل محفوظ حتى بعد إغلاق المتصفح.
+// ملحوظة: البيانات مرتبطة بالجهاز والمتصفح اللي بتفتح بيهم بالظبط.
+const DB_NAME = 'abuZiyadShopDB';
+const STORE_NAME = 'shopData';
+const DB_KEY = 'shop-data';
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    req.onsuccess = (e) => resolve(e.target.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function loadData() {
+  try {
+    const db = await openDB();
+    return await new Promise((resolve) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.get(DB_KEY);
+      req.onsuccess = () => {
+        if (req.result) resolve(JSON.parse(req.result));
+        else resolve({ products: [], invoices: [], expenses: [] });
+      };
+      req.onerror = () => resolve({ products: [], invoices: [], expenses: [] });
+    });
+  } catch (e) {
+    console.error('load failed', e);
+    return { products: [], invoices: [], expenses: [] };
+  }
+}
+
+async function saveData(data) {
+  try {
+    const db = await openDB();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.put(JSON.stringify(data), DB_KEY);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+    });
+  } catch (e) {
+    console.error('save failed', e);
+    showToast('حصل خطأ في حفظ البيانات، حاول تاني');
+  }
+}
+
+let STATE = { products: [], invoices: [], expenses: [] };
+let cart = []; // {productId, name, price, qty}
+let currentPage = 'dashboard';
+let discountPercent = 0;
+let paymentMethod = 'كاش';
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+function money(n) {
+  return (Math.round(n * 100) / 100).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ج.م';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function setDate() {
+  const d = new Date();
+  document.getElementById('todayDate').textContent = d.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// ===================== NAV =====================
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    currentPage = item.dataset.page;
+    render();
+  });
+});
+
+// ===================== RENDER ROUTER =====================
+function render() {
+  const el = document.getElementById('pageContent');
+  if (currentPage === 'dashboard') el.innerHTML = renderDashboard();
+  else if (currentPage === 'pos') { el.innerHTML = renderPOS(); attachPOSHandlers(); }
+  else if (currentPage === 'products') el.innerHTML = renderProducts();
+  else if (currentPage === 'invoices') el.innerHTML = renderInvoices();
+  else if (currentPage === 'expenses') el.innerHTML = renderExpenses();
+  attachGlobalHandlers();
+}
+
+// ===================== DASHBOARD =====================
+function renderDashboard() {
+  const today = new Date().toDateString();
+  const todayInvoices = STATE.invoices.filter(i => new Date(i.date).toDateString() === today);
+  const todaySales = todayInvoices.reduce((s, i) => s + i.total, 0);
+  const lowStock = STATE.products.filter(p => p.qty <= 3).length;
+  const totalProducts = STATE.products.length;
+
+  const recent = [...STATE.invoices].sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+
+  return `
+    <div class="page-header">
+      <div class="page-title">لوحة التحكم</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="top-row">
+          <span class="stat-label">مبيعات اليوم</span>
+          <div class="stat-icon icon-sage">💰</div>
+        </div>
+        <div class="stat-value">${money(todaySales)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row">
+          <span class="stat-label">فواتير اليوم</span>
+          <div class="stat-icon icon-tan">🧾</div>
+        </div>
+        <div class="stat-value">${todayInvoices.length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row">
+          <span class="stat-label">إجمالي الأصناف</span>
+          <div class="stat-icon icon-neutral">📦</div>
+        </div>
+        <div class="stat-value">${totalProducts}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row">
+          <span class="stat-label">أصناف قاربت على النفاد</span>
+          <div class="stat-icon icon-rust">⚠️</div>
+        </div>
+        <div class="stat-value">${lowStock}</div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h3>إجراءات سريعة</h3>
+      <div class="qa-grid">
+        <div class="qa-btn" onclick="goTo('pos')"><span class="qa-icon">🛍️</span>فاتورة جديدة</div>
+        <div class="qa-btn" onclick="goTo('products')"><span class="qa-icon">➕</span>إضافة صنف</div>
+        <div class="qa-btn" onclick="goTo('expenses')"><span class="qa-icon">📤</span>مصروف جديد</div>
+        <div class="qa-btn" onclick="goTo('invoices')"><span class="qa-icon">📋</span>عرض الفواتير</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">آخر الفواتير</div>
+      ${recent.length === 0 ? emptyState('لسه مفيش فواتير', '🧾') : `
+      <table>
+        <thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>الإجمالي</th><th>التاريخ</th></tr></thead>
+        <tbody>
+          ${recent.map(inv => `
+            <tr>
+              <td>${inv.number}</td>
+              <td>${inv.customer || 'عميل عادي'}</td>
+              <td><strong>${money(inv.total)}</strong></td>
+              <td>${new Date(inv.date).toLocaleString('ar-EG', {dateStyle:'short', timeStyle:'short'})}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  `;
+}
+
+function goTo(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.page === page));
+  render();
+}
+
+function emptyState(msg, icon) {
+  return `<div class="empty-state"><div class="icon">${icon}</div><div>${msg}</div></div>`;
+}
+
+// ===================== PRODUCTS =====================
+function renderProducts() {
+  const rows = STATE.products;
+  return `
+    <div class="page-header">
+      <div class="page-title">إدارة الأصناف</div>
+      <button class="btn btn-primary" onclick="openProductModal()">+ إضافة صنف جديد</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">إجمالي الأصناف</span><div class="stat-icon icon-neutral">📦</div></div>
+        <div class="stat-value">${rows.length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">إجمالي الكمية بالمخزون</span><div class="stat-icon icon-sage">🧮</div></div>
+        <div class="stat-value">${rows.reduce((s,p) => s + p.qty, 0)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">قيمة المخزون</span><div class="stat-icon icon-tan">💰</div></div>
+        <div class="stat-value">${money(rows.reduce((s,p) => s + p.qty * p.price, 0))}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">مخزون منخفض</span><div class="stat-icon icon-rust">⚠️</div></div>
+        <div class="stat-value">${rows.filter(p => p.qty <= 3).length}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">قائمة الأصناف</div>
+      ${rows.length === 0 ? emptyState('لسه مفيش أصناف مضافة. ابدأ بإضافة أول صنف.', '👕') : `
+      <table>
+        <thead><tr><th>الاسم</th><th>الباركود</th><th>الكمية</th><th>السعر</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+        <tbody>
+          ${rows.map(p => `
+            <tr>
+              <td><strong>${p.name}</strong></td>
+              <td>${p.barcode || '-'}</td>
+              <td>${p.qty}</td>
+              <td>${money(p.price)}</td>
+              <td>${p.qty === 0 ? '<span class="badge badge-rust">نافد</span>' : p.qty <= 3 ? '<span class="badge badge-gold">منخفض</span>' : '<span class="badge badge-sage">متوفر</span>'}</td>
+              <td>
+                <button class="btn btn-ghost btn-sm" onclick="openProductModal('${p.id}')">تعديل</button>
+                <button class="btn btn-rust btn-sm" onclick="deleteProduct('${p.id}')">حذف</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  `;
+}
+
+function openProductModal(id) {
+  const p = id ? STATE.products.find(x => x.id === id) : null;
+  document.getElementById('modalBox').innerHTML = `
+    <h3>${p ? 'تعديل صنف' : 'إضافة صنف جديد'}</h3>
+    <div class="field-group">
+      <div class="field-label">اسم الصنف</div>
+      <input class="field-input" id="mp_name" value="${p ? p.name : ''}" placeholder="مثال: قميص كلاسيك أزرق">
+    </div>
+    <div class="field-group">
+      <div class="field-label">السعر (ج.م)</div>
+      <input class="field-input" id="mp_price" type="number" min="0" step="0.01" value="${p ? p.price : ''}" placeholder="0.00">
+    </div>
+    <div class="field-group">
+      <div class="field-label">الكمية بالمخزون</div>
+      <input class="field-input" id="mp_qty" type="number" min="0" value="${p ? p.qty : ''}" placeholder="0">
+    </div>
+    <div class="field-group">
+      <div class="field-label">الباركود (اختياري)</div>
+      <input class="field-input" id="mp_barcode" value="${p ? (p.barcode || '') : ''}" placeholder="اتركه فاضي لو مفيش">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveProduct(${p ? `'${p.id}'` : 'null'})">${p ? 'حفظ التعديل' : 'إضافة الصنف'}</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+async function saveProduct(id) {
+  const name = document.getElementById('mp_name').value.trim();
+  const price = parseFloat(document.getElementById('mp_price').value);
+  const qty = parseInt(document.getElementById('mp_qty').value);
+  const barcode = document.getElementById('mp_barcode').value.trim();
+
+  if (!name) { showToast('من فضلك اكتب اسم الصنف'); return; }
+  if (isNaN(price) || price < 0) { showToast('اكتب سعر صحيح'); return; }
+  if (isNaN(qty) || qty < 0) { showToast('اكتب كمية صحيحة'); return; }
+
+  if (id) {
+    const p = STATE.products.find(x => x.id === id);
+    p.name = name; p.price = price; p.qty = qty; p.barcode = barcode;
+    showToast('تم تعديل الصنف');
+  } else {
+    STATE.products.push({ id: uid(), name, price, qty, barcode });
+    showToast('تم إضافة الصنف');
+  }
+  await saveData(STATE);
+  closeModal();
+  render();
+}
+
+async function deleteProduct(id) {
+  if (!confirm('هل أنت متأكد من حذف هذا الصنف؟')) return;
+  STATE.products = STATE.products.filter(p => p.id !== id);
+  await saveData(STATE);
+  showToast('تم حذف الصنف');
+  render();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// ===================== POS =====================
+function renderPOS() {
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const discountVal = subtotal * (discountPercent / 100);
+  const total = subtotal - discountVal;
+
+  return `
+    <div class="page-header">
+      <div class="page-title">نقطة البيع</div>
+    </div>
+    <div class="pos-layout">
+      <div class="pos-summary">
+        <div class="total-box">
+          <div class="label">الإجمالي المطلوب</div>
+          <div class="amount">${money(total)}</div>
+        </div>
+        <div class="summary-row"><span class="lbl">عدد الأصناف</span><span class="val">${cart.length}</span></div>
+        <div class="summary-row"><span class="lbl">الإجمالي قبل الخصم</span><span class="val">${money(subtotal)}</span></div>
+
+        <div class="field-group">
+          <div class="field-label">نسبة الخصم %</div>
+          <input class="field-input" id="discountInput" type="number" min="0" max="100" value="${discountPercent}" oninput="updateDiscount(this.value)">
+        </div>
+        <div class="summary-row"><span class="lbl">قيمة الخصم</span><span class="val">${money(discountVal)}</span></div>
+
+        <div class="field-group">
+          <div class="field-label">طريقة الدفع</div>
+          <div class="pay-methods">
+            <div class="pay-method ${paymentMethod === 'كاش' ? 'active' : ''}" onclick="setPayment('كاش')">كاش</div>
+            <div class="pay-method ${paymentMethod === 'فيزا' ? 'active' : ''}" onclick="setPayment('فيزا')">فيزا</div>
+            <div class="pay-method ${paymentMethod === 'محفظة' ? 'active' : ''}" onclick="setPayment('محفظة')">محفظة</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-label">اسم العميل (اختياري)</div>
+          <input class="field-input" id="customerName" placeholder="عميل عادي">
+        </div>
+
+        <button class="btn btn-sage" style="width:100%; justify-content:center; margin-top:10px;" ${cart.length === 0 ? 'disabled' : ''} onclick="checkout()">
+          ✔ حفظ الفاتورة
+        </button>
+        ${cart.length > 0 ? `<button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:8px;" onclick="clearCart()">إفراغ الفاتورة</button>` : ''}
+      </div>
+
+      <div class="pos-main">
+        <div class="search-bar">
+          <input type="text" id="posSearch" placeholder="ابحث بالاسم أو الباركود..." oninput="filterProducts(this.value)">
+        </div>
+        <div class="product-grid" id="productGrid">
+          ${renderProductTiles(STATE.products)}
+        </div>
+        <div class="card-header" style="border-top:1px solid var(--border);">عناصر الفاتورة</div>
+        <div class="cart-list" id="cartList">
+          ${cart.length === 0 ? emptyState('لسه مفيش منتجات متضافة للفاتورة', '🛒') : cart.map(c => `
+            <div class="cart-item">
+              <div class="ci-name">${c.name}</div>
+              <div class="ci-price">${money(c.price)}</div>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty('${c.productId}', -1)">−</button>
+                <div class="ci-qty">${c.qty}</div>
+                <button class="qty-btn" onclick="changeQty('${c.productId}', 1)">+</button>
+              </div>
+              <div class="ci-total">${money(c.price * c.qty)}</div>
+              <div class="ci-remove" onclick="removeFromCart('${c.productId}')">✕</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProductTiles(products) {
+  if (products.length === 0) return emptyState('مفيش أصناف تطابق البحث', '🔍');
+  return products.map(p => `
+    <div class="product-tile ${p.qty <= 3 ? 'low-stock' : ''}" onclick="addToCart('${p.id}')">
+      <div class="p-name">${p.name}</div>
+      <div class="p-price">${money(p.price)}</div>
+      <div class="p-stock">متوفر: ${p.qty}</div>
+    </div>
+  `).join('');
+}
+
+function attachPOSHandlers() {
+  discountPercent = discountPercent || 0;
+}
+
+function filterProducts(query) {
+  const q = query.trim().toLowerCase();
+  const filtered = STATE.products.filter(p =>
+    p.name.toLowerCase().includes(q) || (p.barcode && p.barcode.includes(q))
+  );
+  document.getElementById('productGrid').innerHTML = renderProductTiles(filtered);
+}
+
+function addToCart(productId) {
+  const p = STATE.products.find(x => x.id === productId);
+  if (!p) return;
+  if (p.qty <= 0) { showToast('الصنف ده نافد من المخزون'); return; }
+
+  const existing = cart.find(c => c.productId === productId);
+  if (existing) {
+    if (existing.qty + 1 > p.qty) { showToast('الكمية المطلوبة أكبر من المتوفر بالمخزون'); return; }
+    existing.qty += 1;
+  } else {
+    cart.push({ productId, name: p.name, price: p.price, qty: 1 });
+  }
+  refreshPOSPanels();
+}
+
+function changeQty(productId, delta) {
+  const item = cart.find(c => c.productId === productId);
+  const p = STATE.products.find(x => x.id === productId);
+  if (!item) return;
+  const newQty = item.qty + delta;
+  if (newQty <= 0) {
+    cart = cart.filter(c => c.productId !== productId);
+  } else if (p && newQty > p.qty) {
+    showToast('الكمية المطلوبة أكبر من المتوفر بالمخزون');
+    return;
+  } else {
+    item.qty = newQty;
+  }
+  refreshPOSPanels();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(c => c.productId !== productId);
+  refreshPOSPanels();
+}
+
+function clearCart() {
+  cart = [];
+  discountPercent = 0;
+  refreshPOSPanels();
+}
+
+function updateDiscount(val) {
+  discountPercent = parseFloat(val) || 0;
+  refreshPOSPanels(true);
+}
+
+function setPayment(method) {
+  paymentMethod = method;
+  refreshPOSPanels();
+}
+
+function refreshPOSPanels(keepFocus) {
+  const searchVal = document.getElementById('posSearch') ? document.getElementById('posSearch').value : '';
+  const customerVal = document.getElementById('customerName') ? document.getElementById('customerName').value : '';
+  document.getElementById('pageContent').innerHTML = renderPOS();
+  if (searchVal) {
+    document.getElementById('posSearch').value = searchVal;
+    filterProducts(searchVal);
+  }
+  if (customerVal) document.getElementById('customerName').value = customerVal;
+}
+
+async function checkout() {
+  if (cart.length === 0) return;
+  const customer = document.getElementById('customerName').value.trim();
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const discountVal = subtotal * (discountPercent / 100);
+  const total = subtotal - discountVal;
+
+  // deduct stock
+  for (const item of cart) {
+    const p = STATE.products.find(x => x.id === item.productId);
+    if (p) p.qty = Math.max(0, p.qty - item.qty);
+  }
+
+  const invoice = {
+    id: uid(),
+    number: 'INV-' + Math.floor(10000 + Math.random() * 89999),
+    date: new Date().toISOString(),
+    customer: customer || 'عميل عادي',
+    items: cart.map(c => ({ name: c.name, price: c.price, qty: c.qty })),
+    subtotal, discountPercent, discountVal, total,
+    payment: paymentMethod
+  };
+  STATE.invoices.push(invoice);
+  await saveData(STATE);
+
+  cart = [];
+  discountPercent = 0;
+  showToast('تم حفظ الفاتورة رقم ' + invoice.number);
+  render();
+}
+
+// ===================== INVOICES =====================
+function renderInvoices() {
+  const list = [...STATE.invoices].sort((a,b) => new Date(b.date) - new Date(a.date));
+  const totalSales = STATE.invoices.reduce((s,i) => s + i.total, 0);
+  return `
+    <div class="page-header">
+      <div class="page-title">إدارة الفواتير</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">إجمالي الفواتير</span><div class="stat-icon icon-neutral">🧾</div></div>
+        <div class="stat-value">${list.length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">إجمالي المبيعات</span><div class="stat-icon icon-sage">💰</div></div>
+        <div class="stat-value">${money(totalSales)}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">قائمة الفواتير</div>
+      ${list.length === 0 ? emptyState('لسه مفيش فواتير', '🧾') : `
+      <table>
+        <thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>عدد الأصناف</th><th>طريقة الدفع</th><th>الإجمالي</th><th>التاريخ</th><th></th></tr></thead>
+        <tbody>
+          ${list.map(inv => `
+            <tr>
+              <td><strong>${inv.number}</strong></td>
+              <td>${inv.customer}</td>
+              <td>${inv.items.reduce((s,i)=>s+i.qty,0)}</td>
+              <td>${inv.payment}</td>
+              <td><strong>${money(inv.total)}</strong></td>
+              <td>${new Date(inv.date).toLocaleString('ar-EG', {dateStyle:'short', timeStyle:'short'})}</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="viewInvoice('${inv.id}')">عرض</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  `;
+}
+
+function viewInvoice(id) {
+  const inv = STATE.invoices.find(i => i.id === id);
+  if (!inv) return;
+  document.getElementById('modalBox').innerHTML = `
+    <h3>فاتورة ${inv.number}</h3>
+    <div class="summary-row"><span class="lbl">العميل</span><span class="val">${inv.customer}</span></div>
+    <div class="summary-row"><span class="lbl">التاريخ</span><span class="val">${new Date(inv.date).toLocaleString('ar-EG')}</span></div>
+    <div class="summary-row"><span class="lbl">طريقة الدفع</span><span class="val">${inv.payment}</span></div>
+    <div style="margin: 14px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding: 10px 0;">
+      ${inv.items.map(it => `
+        <div class="summary-row"><span class="lbl">${it.name} × ${it.qty}</span><span class="val">${money(it.price * it.qty)}</span></div>
+      `).join('')}
+    </div>
+    <div class="summary-row"><span class="lbl">الإجمالي قبل الخصم</span><span class="val">${money(inv.subtotal)}</span></div>
+    <div class="summary-row"><span class="lbl">الخصم (${inv.discountPercent}%)</span><span class="val">${money(inv.discountVal)}</span></div>
+    <div class="summary-row"><span class="lbl"><strong>الإجمالي النهائي</strong></span><span class="val"><strong>${money(inv.total)}</strong></span></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="closeModal()">إغلاق</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+// ===================== EXPENSES =====================
+function renderExpenses() {
+  const list = [...STATE.expenses].sort((a,b) => new Date(b.date) - new Date(a.date));
+  const total = STATE.expenses.reduce((s,e) => s + e.amount, 0);
+  return `
+    <div class="page-header">
+      <div class="page-title">إدارة المصروفات</div>
+      <button class="btn btn-primary" onclick="openExpenseModal()">+ إضافة مصروف</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="top-row"><span class="stat-label">إجمالي المصروفات</span><div class="stat-icon icon-rust">📤</div></div>
+        <div class="stat-value">${money(total)}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">قائمة المصروفات</div>
+      ${list.length === 0 ? emptyState('لسه مفيش مصروفات مسجلة', '📤') : `
+      <table>
+        <thead><tr><th>اسم المصروف</th><th>المبلغ</th><th>التاريخ</th><th>الإجراءات</th></tr></thead>
+        <tbody>
+          ${list.map(e => `
+            <tr>
+              <td><strong>${e.name}</strong></td>
+              <td>${money(e.amount)}</td>
+              <td>${new Date(e.date).toLocaleString('ar-EG', {dateStyle:'short'})}</td>
+              <td><button class="btn btn-rust btn-sm" onclick="deleteExpense('${e.id}')">حذف</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`}
+    </div>
+  `;
+}
+
+function openExpenseModal() {
+  document.getElementById('modalBox').innerHTML = `
+    <h3>إضافة مصروف جديد</h3>
+    <div class="field-group">
+      <div class="field-label">اسم المصروف</div>
+      <input class="field-input" id="me_name" placeholder="مثال: إيجار، كهرباء، نقل">
+    </div>
+    <div class="field-group">
+      <div class="field-label">المبلغ (ج.م)</div>
+      <input class="field-input" id="me_amount" type="number" min="0" step="0.01" placeholder="0.00">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveExpense()">حفظ</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+async function saveExpense() {
+  const name = document.getElementById('me_name').value.trim();
+  const amount = parseFloat(document.getElementById('me_amount').value);
+  if (!name) { showToast('اكتب اسم المصروف'); return; }
+  if (isNaN(amount) || amount < 0) { showToast('اكتب مبلغ صحيح'); return; }
+
+  STATE.expenses.push({ id: uid(), name, amount, date: new Date().toISOString() });
+  await saveData(STATE);
+  showToast('تم إضافة المصروف');
+  closeModal();
+  render();
+}
+
+async function deleteExpense(id) {
+  if (!confirm('هل تريد حذف هذا المصروف؟')) return;
+  STATE.expenses = STATE.expenses.filter(e => e.id !== id);
+  await saveData(STATE);
+  showToast('تم الحذف');
+  render();
+}
+
+// ===================== GLOBAL =====================
+function attachGlobalHandlers() {
+  document.getElementById('modalOverlay').onclick = (e) => {
+    if (e.target.id === 'modalOverlay') closeModal();
+  };
+}
+
+// ===================== BACKUP =====================
+function exportBackup() {
+  const blob = new Blob([JSON.stringify(STATE, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `نسخة-احتياطية-ابو-زياد-${dateStr}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('تم تحميل النسخة الاحتياطية');
+}
+
+function importBackup(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.products || !data.invoices || !data.expenses) {
+        showToast('الملف مش بصيغة صحيحة');
+        return;
+      }
+      if (!confirm('هيتم استبدال كل البيانات الحالية بالنسخة دي. متأكد؟')) return;
+      STATE = data;
+      await saveData(STATE);
+      showToast('تم استيراد النسخة الاحتياطية بنجاح');
+      render();
+    } catch (err) {
+      showToast('حصل خطأ في قراءة الملف');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ===================== INIT =====================
+async function init() {
+  setDate();
+  document.getElementById('pageContent').innerHTML = `<div class="page"><div class="empty-state"><span class="loading-dot"></span> جاري تحميل البيانات...</div></div>`;
+  STATE = await loadData();
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
